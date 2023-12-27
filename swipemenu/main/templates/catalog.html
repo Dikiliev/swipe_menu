@@ -1,0 +1,50 @@
+{% extends  "base.html" %}
+
+{% load static %}
+
+{% block head  %}
+<link type="text/css" rel="stylesheet" href="{% static 'css/catalog.css' %}">
+{% endblock %}
+
+{% block content  %}
+
+
+<div class="enter-5"></div>
+<div class="container">
+    <h1>Каталог</h1>
+
+    <div class="brands-container">
+        {% for brand in brands %}
+        <div class="brand-container">
+            <div class="flex brand-header">
+                <img class="brand-avatar" src="{{ brand.avatar.url }}">
+                <span class="brand-title">{{ brand.title }}</span>
+            </div>
+
+            <div class="flex brand-content">
+                {% for product in brand.get_product %}
+
+                <div class="product">
+                    <img src="{{ product.image.url }}">
+                    <span class="product-title">{{ product.title }}</span>
+                    <span class="product-composition">{{ product.composition | truncatechars:20 }}</span>
+                    <span class="product-price">{{ product.price }}</span>
+                </div>
+
+                {% endfor %}
+            </div>
+
+            <div class="flex brand-info">
+                <button class="like-button"></button>
+                <span>1276</span>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+
+</div>
+
+
+{% endblock %}
+

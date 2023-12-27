@@ -9,7 +9,7 @@
 {% block content  %}
 
 
-<div class="enter-5"></div>
+<br><br>
 <div class="container">
     <h1>Каталог</h1>
 
@@ -26,13 +26,15 @@
 
                 <div class="product">
                     <img src="{{ product.image.url }}">
-                    <span class="product-title">{{ product.title }}</span>
+                    <span class="product-title">{{ product.title | truncatechars:13}}</span>
                     <span class="product-composition">{{ product.composition | truncatechars:20 }}</span>
                     <span class="product-price">{{ product.price }}</span>
                 </div>
 
                 {% endfor %}
             </div>
+
+            <br>
 
             <div class="flex brand-info">
                 <button class="like-button"></button>

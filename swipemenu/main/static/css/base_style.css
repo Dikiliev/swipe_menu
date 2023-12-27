@@ -14,7 +14,7 @@
     --color-hover-1: #F86F03;
     --color-hover-2: #FFA41B;
 
-    --color-transparent: rgba(69, 69, 69, 0.55);
+    --color-transparent: rgba(69, 69, 69, 0.41);
 
     --error-color: #D80032;
 
@@ -36,7 +36,16 @@
     color: var(--color-2);
 
     transition: var(--base-transition);
+
+    scrollbar-width: none;
+    -ms-overflow-style: none;
 }
+
+
+::-webkit-scrollbar {
+    width: 0;
+}
+
 *, *:hover {
     transition: var(--base-transition);
 }
@@ -61,6 +70,11 @@ main{
 h1{
     font-weight: 900;
     color: var(--color-2);
+}
+
+hr{
+    border: none;
+    border-top: 1px dashed var(--color-transparent);
 }
 
 a{
@@ -123,7 +137,11 @@ a{
 }
 
 .enter-5{
-    margin-top: 5%;
+    margin-top: 5vh;
+}
+
+.enter-right-10{
+    margin-right: 10%;
 }
 
 form{
@@ -177,19 +195,25 @@ form a:hover{
     color: var(--color-hover-1);
 }
 
-.gradient-button{
-    position: relative;
+.button, .gradient-button{
     width: 100%;
     padding: 10px;
     outline:none;
-
-    background: linear-gradient(90deg, var(--color-hover-1) 0%, var(--color-hover-2) 100%);
-    color: var(--background-color-1);
-
     font-size: 20px;
 
     border-radius: calc(var(--base-border-radius) / 2);
     border: none;
+
+    background-color: var(--color-2);
+    color: var(--background-color-1);
+}
+
+.gradient-button{
+    position: relative;
+    background: linear-gradient(90deg, var(--color-hover-1) 0%, var(--color-hover-2) 100%);
+    color: var(--background-color-1);
+
+
 }
 .gradient-button a{
     margin: 0;
@@ -223,3 +247,22 @@ form a:hover{
     opacity: 1;
 }
 
+.image{
+    max-height: 250px;
+    max-width: 250px;
+    width: 50%;
+    height: auto;
+    object-fit: cover;
+    border-radius: var(--base-border-radius);
+    margin: auto;
+
+}
+
+.image.hidden{
+    display: none;
+}
+
+.flex{
+    display: flex;
+    align-items: center;
+}

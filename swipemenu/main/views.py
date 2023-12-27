@@ -55,6 +55,7 @@ def brand(request: HttpRequest):
         return redirect('create-brand')
 
     data = create_base_data('Мое заведения')
+    data['brand'] = Brand.objects.filter(user_id=request.user.id)[0]
     return render(request, 'brand.html', data)
 
 
@@ -81,7 +82,7 @@ def add_product(request: HttpRequest):
 
         product.save()
 
-        return redirect('home')
+        return redirect('brand')
 
     if request.method == 'POST':
         return post()
@@ -93,8 +94,6 @@ def catalog(request: HttpRequest):
     data['brands'] = []
 
     brands = Brand.objects.all()
-
-
     data['brands'] = brands
 
     print(data)

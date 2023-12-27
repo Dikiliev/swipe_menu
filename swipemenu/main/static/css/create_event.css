@@ -27,19 +27,6 @@ form{
     height: 60px;
 }
 
-.image{
-    width: 100%;
-    max-height: 500px;
-    object-fit: cover;
-    border-radius: var(--base-border-radius);
-    margin: auto;
-
-}
-
-.image.hidden{
-    display: none;
-}
-
 .textarea{
     display: inline-flex;
     height: 200px;

@@ -41,7 +41,6 @@
     -ms-overflow-style: none;
 }
 
-
 ::-webkit-scrollbar {
     width: 0;
 }
@@ -68,7 +67,7 @@ main{
 }
 
 h1{
-    font-weight: 900;
+    font-weight: 700;
     color: var(--color-2);
 }
 
@@ -98,8 +97,12 @@ a{
 }
 .head-content{
     margin: auto;
-    width: 90vw;
+    width: 63%;
     height: 100%;
+}
+
+.profile-text{
+    font-weight: 700;
 }
 
 .error{
@@ -122,6 +125,7 @@ a{
 }
 
 .nav-item{
+    font-size: 16px;
     margin: auto 20px;
     text-decoration: none;
 }
@@ -146,7 +150,7 @@ a{
 
 form{
     box-shadow: 0 1px var(--shadow-blur) var(--shadow);
-    padding: 50px;
+    padding: 50px 50px;
     margin: 20px auto;
 
     width: 300px;
@@ -173,8 +177,8 @@ option{
     border-radius: calc(var(--base-border-radius) / 2);
     border: 0px solid var(--color-1);
 
-    padding: 3px 7px;
-    font-size: 19px;
+    padding: 7px 7px;
+    font-size: 16px;
 }
 .input-group input:hover, .input-group textarea:hover{
     border-color: var(--color-2);
@@ -210,7 +214,7 @@ form a:hover{
 
 .gradient-button{
     position: relative;
-    background: linear-gradient(90deg, var(--color-hover-1) 0%, var(--color-hover-2) 100%);
+    background: linear-gradient(200deg, var(--color-hover-1) 0%, var(--color-hover-2) 100%);
     color: var(--background-color-1);
 
 

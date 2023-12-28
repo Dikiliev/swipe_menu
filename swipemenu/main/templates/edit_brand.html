@@ -1,0 +1,97 @@
+{% extends  "base.html" %}
+
+{% load static %}
+
+
+{% block head  %}
+
+<link type="text/css" rel="stylesheet" href="{% static 'css/edit_brand.css' %}">
+<script type="text/javascript" src="{% static 'js/edit_brand.js' %}"></script>
+
+{% endblock %}
+
+{% block content  %}
+
+<div class="enter-5"></div>
+<div class="container">
+    <h1>Мое заведение</h1>
+
+    <form class="" action="" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+
+        <div class="flex">
+            <div class="container">
+                <img id="image-show" class="image" src="{{ brand.avatar.url }}">
+
+                <div id="file-input-div" class="file-input" >
+                    <label for="image_file" class="file-input-button">
+                        Изменить фото
+                    </label>
+                    <input type="file" name="image_file" id="image_file" accept="image/*" style="display: none;" required>
+                </div>
+            </div>
+
+            <div class="container info-part">
+                <div class="input-group">
+                    <label for="username">Название:</label>
+                    <input type="text" id="username" name="username" value="{{ brand.title }}" required>
+                </div>
+
+                <div class="input-group">
+                    <label for="description">Описание:</label>
+                    <textarea class="textarea" type="text" id="description" name="description" value="" required>{{ brand.description }}</textarea>
+                </div>
+
+                <div class="input-group">
+                    <label for="address">Адрес:</label>
+                    <input type="text" id="address" name="address" value="{{ brand.address }}" required>
+                </div>
+
+                <div class="input-group">
+                    <label for="phone_number">Номер&nbsp;для&nbsp;связи:</label>
+                    <input type="text" id="phone_number" name="phone_number" value="{{ brand.phone_number }}" required>
+                </div>
+            </div>
+
+        </div>
+
+        <p class="error">{{ error }}</p>
+        <br>
+
+        <div class="flex">
+
+            <button class="button">Отменить</button>
+            <div class="enter-right-10"></div>
+            <button class="gradient-button" type="submit"><a>Сохранить</a></button>
+
+        </div>
+        <br><br><hr><br><br><br>
+        <h2>Мои товары</h2>
+
+        <div class="products">
+            {% for product in brand.get_product %}
+
+            <div class="product">
+                <img src="{{ product.image.url }}">
+                <span class="product-title">{{ product.title }}</span>
+                <span class="product-composition">{{ product.composition | truncatechars:20 }}</span>
+                <span class="product-price">{{ product.price }}</span>
+            </div>
+
+            {% endfor %}
+
+            <a class="add-product" href="/add-product">
+                <img class="add-icon" src="{% static 'images/add-plus.png' %}">
+                <span>Добавить товар</span>
+            </a>
+        </div>
+
+    </form>
+</div>
+
+<script type="text/javascript">
+    initialize_brand()
+</script>
+
+{% endblock %}
+

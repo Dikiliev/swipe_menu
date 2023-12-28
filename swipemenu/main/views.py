@@ -1,8 +1,11 @@
-from django.contrib.auth import login, logout, authenticate
-from django.http import HttpRequest
-from django.shortcuts import render, redirect
+import json
 
-from .models import User, Brand, Product
+from django.contrib.auth import login, logout, authenticate
+from django.http import HttpRequest, JsonResponse
+from django.shortcuts import render, redirect
+from django.views.decorators.csrf import csrf_exempt
+
+from .models import User, Brand, Product, Order, OrderItem
 
 DEFAULT_TITLE = 'DjangoDev'
 
@@ -47,7 +50,13 @@ def create_brand(request: HttpRequest):
     return get()
 
 
-def brand(request: HttpRequest):
+def brand(request: HttpRequest, brand_id: int):
+    data = create_base_data('Заказ')
+    data['brand'] = Brand.objects.filter(id=brand_id)[0]
+    return render(request, 'brand.html', data)
+
+
+def edit_brand(request: HttpRequest):
     if not request.user.is_authenticated:
         return redirect('login')
 
@@ -56,7 +65,7 @@ def brand(request: HttpRequest):
 
     data = create_base_data('Мое заведения')
     data['brand'] = Brand.objects.filter(user_id=request.user.id)[0]
-    return render(request, 'brand.html', data)
+    return render(request, 'edit_brand.html', data)
 
 
 def add_product(request: HttpRequest):
@@ -82,11 +91,45 @@ def add_product(request: HttpRequest):
 
         product.save()
 
-        return redirect('brand')
+        return redirect('edit-brand')
 
     if request.method == 'POST':
         return post()
     return get()
+
+
+@csrf_exempt
+def order(request: HttpRequest, order_id: int):
+    data = create_base_data(f'Заказ {order_id}')
+
+    if request.method == "POST":
+        data = json.loads(request.body)
+        products = data['products']
+
+        user = User.objects.get(id=data['user_id'])
+        brand = Brand.objects.get(id=data['brand_id'])
+
+        order = Order.objects.create(user=user, brand=brand)
+
+        order_items = []
+        for product in products:
+            product_db = Product.objects.get(id=int(product['id']))
+            order_item = OrderItem.objects.create(order=order, product=product_db, quantity=product['count'])
+            order_items.append(order_item)
+
+        order.save()
+
+        for order_item in order_items:
+            order_item.save()
+
+        response_data = {"message": "Данные успешно получены", 'data': products}
+        return JsonResponse(response_data)
+    else:
+        return JsonResponse({"error": "Метод запроса должен быть POST"})
+
+
+def user_orders(request: HttpRequest):
+    pass
 
 
 def catalog(request: HttpRequest):

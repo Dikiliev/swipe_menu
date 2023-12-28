@@ -1,5 +1,8 @@
+import random
+
 from django.contrib.auth.hashers import make_password, check_password
 from django.contrib.auth.models import AbstractUser
+from django.core.validators import MinValueValidator, MaxValueValidator
 from django.db import models
 
 
@@ -68,3 +71,61 @@ class Product(models.Model):
 
     def __str__(self):
         return self.title
+
+    def get_price(self):
+        return int(self.price)
+
+    def get_custom_dict(self):
+        res = {
+            'title': self.title,
+        }
+
+        return res
+
+
+class Order(models.Model):
+    ORDER_TYPE_CHOICES = (
+        (1, 'На вынос'),
+        (2, 'В заведении'),
+        (3, 'С доставкой'),
+    )
+
+    ORDER_STATUS_CHOICES = (
+        (1, 'Принято'),
+        (2, 'В процессе'),
+        (3, 'Готово'),
+    )
+
+    brand = models.ForeignKey(Brand, on_delete=models.CASCADE, verbose_name='Бренд', related_name='orders')
+    user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='Пользователь', related_name='orders')
+
+    order_number = models.PositiveIntegerField(unique=True,
+                                               validators=[MinValueValidator(1000),MaxValueValidator(9999),],
+                                               verbose_name='Номер заказа')
+
+    order_type = models.IntegerField(default=1, choices=ORDER_TYPE_CHOICES, verbose_name='Тип заказа')
+    order_status = models.IntegerField(default=1, choices=ORDER_STATUS_CHOICES, verbose_name='Статус')
+    # items = models.ManyToManyField('OrderItem', verbose_name='Список заказанных продуктов')
+
+    def __str__(self):
+        return f"Заказ №{self.order_number} ({self.get_order_type_display()}) - {self.get_order_status_display()}"
+
+    def generate_order_number(self):
+        while True:
+            order_number = random.randint(10000, 99999)
+            if not Order.objects.filter(order_number=order_number).exists():
+                return order_number
+
+    def save(self, *args, **kwargs):
+        if not self.order_number:
+            self.order_number = self.generate_order_number()
+        super().save(*args, **kwargs)
+
+
+class OrderItem(models.Model):
+    order = models.ForeignKey(Order, on_delete=models.CASCADE, verbose_name='Заказ')
+    product = models.ForeignKey('Product', on_delete=models.CASCADE, verbose_name='Продукт')
+    quantity = models.PositiveIntegerField(verbose_name='Количество')
+
+    def __str__(self):
+        return f"{self.product.title} x{self.quantity}"

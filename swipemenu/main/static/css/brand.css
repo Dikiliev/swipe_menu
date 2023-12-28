@@ -1,111 +1,67 @@
-form{
-    width: 1000px;
-}
 
-.flex{
+.content{
+    margin: 10px;
     display: flex;
-    align-items: center;
-    justify-content: space-between;
 }
 
-.info-part{
-    width: 70%;
+.brand-container{
+    width: 100%;
+    max-width: 80vw;
 
-    align-items: flex-end;
-}
-
-.input-group{
-    flex-direction: row;
-    margin: 10px 0;
-}
-
-.file-input-button{
-    text-decoration: underline;
-}
-.file-input-button:hover{
-    color: var(--color-hover-1);
-}
-
-
-textarea {
-    resize: none;
-    height: 150px;
-
-    text-align: left;
-}
-
-label{
-    width: 200px;
-}
-
-.input-group input, .input-group textarea, .input-group select{
-    width: 400px;
-
-    background: transparent;
-
-    background: linear-gradient(270deg, rgba(133, 133, 133, 0.07) 0%, transparent 100%);
-
-    border-radius: calc(var(--base-border-radius) / 2);
-    border-bottom-left-radius: 0;
-    border-bottom-right-radius: 0;
-    border-bottom: 1px solid var(--color-transparent);
-}
-
-.input-group input:hover, .input-group textarea:hover{
-    border-color: var(--color-2);
-    box-shadow: none;
-}
-
-h2{
-    text-align: center;
-}
-
-form a{
-    margin-top: 0;
-}
-
-.add-product{
-    text-align: center;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-
-    width: 210px;
-    height: 300px;
-
-    margin-right: 20px;
-    margin-bottom: 20px;
-    padding: 5px;
-
-    background: linear-gradient(0deg, var(--color-hover-1) 0%, var(--color-hover-2) 100%);
-    border-radius: var(--base-border-radius);
-
-    color: var(--background-color-1)
-}
-
-.add-product:hover{
-    background: linear-gradient(25deg, var(--color-hover-1) 0%, var(--color-hover-2) 100%);
-}
-
-.add-product img{
-    height: 120px;
-    width: 120px;
-    margin: 20px auto;
-    border-radius: var(--base-border-radius);
-}
-
-.add-product span{
-    font-weight: 700;
-    font-size: 21px;
-    color: var(--background-color-1)
+    min-height: 300px;
 }
 
 .products{
-    margin: 20px auto;
+    margin: 20px 0;
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
-    justify-content: center;
+
+    width: 70%;
+}
+
+.brand-header{
+    height: 200px;
+    border-bottom: 1px solid var(--color-transparent);
+
+    padding: 10px;
+}
+
+.brand-avatar{
+    height: 90%;
+    width: auto;
+
+    border: 3px solid var(--color-hover-2);
+    border-radius: 100px;
+}
+
+.header-info{
+    display: flex;
+    flex-direction: column;
+}
+.brand-title{
+    font-size: 28px;
+    font-weight: 600;
+
+    margin: 10px 20px;
+}
+
+.brand-description{
+    font-size: 16px;
+    font-weight: 400;
+    color: var(--color-1);
+    margin: 4px 20px;
+}
+
+.avatar{
+
+}
+
+.brand-content{
+    min-height: 100px;
+
+    margin-top: 5px;
+    overflow: hidden;
 }
 
 .product{
@@ -115,32 +71,40 @@ form a{
     justify-content: space-between;
     align-items: flex-end;
 
-    height: 300px;
+    height: 340px;
 
-    margin-right: 20px;
     margin-bottom: 20px;
+    margin-right: 20px;
     padding: 5px;
 
     background: linear-gradient(0deg, var(--background-color-2) -50%, transparent 70%);
 
+    box-shadow: 0 1px var(--shadow-blur) var(--shadow);
     border-radius: var(--base-border-radius);
 }
 
+.rub{
+    font-size: 24px;
+    font-weight: 400;
+}
+
 .product img{
-    height: 200px;
+    height: 250px;
     border-radius: var(--base-border-radius);
 }
 
 .product-title, .product-composition{
     width: 100%;
+    white-space: nowrap;
 }
 
 .product-title{
-    font-size: 21px;
+    font-size: 18px;
     font-weight: 600;
 }
 
 .product-composition{
+    font-size: 14px;
     color: var(--color-transparent)
 }
 
@@ -148,3 +112,156 @@ form a{
     font-size: 24px;
     font-weight: 700;
 }
+
+.count-button{
+    width: 30px;
+    height: 30px;
+
+    border: none;
+
+    font-size: 21px;
+    font-weight: 700;
+    background-color: var(--color-hover-1);
+    color: var(--background-color-1);
+
+    text-align: center;
+}
+.count-button:hover{
+    background-color: var(--color-hover-2);
+}
+
+
+.count-container{
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.count-buttons{
+    min-width: 35%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    margin: 5px;
+
+    font-size: 21px;
+    font-weight: 500;
+    color: var(--color-hover-1);
+
+    /*border: 1px solid var(--color-hover-1);*/
+    border-radius: 40px;
+
+    overflow: hidden;
+}
+
+
+.brand-info{
+    height: 50px;
+    border-top: 1px solid var(--color-transparent);
+}
+
+.brand-info span{
+    margin: auto 10px;
+    font-size: 21px;
+}
+
+.check{
+    display: flex;
+    flex-direction: column;
+
+    width: 300px;
+    min-height: 300px;
+    height: auto;
+
+    margin: 20px;
+
+    background-color: white;
+    box-shadow: 0 1px var(--shadow-blur) var(--shadow);
+    border-radius: var(--base-border-radius);
+
+    align-items: center;
+    text-align: center;
+    padding: 30px 10px;
+}
+
+.check h2{
+    text-align: center;
+}
+
+.check-products{
+    width: 90%;
+    padding: 10px;
+    border: 1px dashed var(--color-transparent);
+    border-radius: var(--base-border-radius);
+}
+
+.check-tr{
+    display: flex;
+    width: 100%;
+}
+.check-td{
+    margin: 0;
+    text-align: left;
+    align-items: start;
+    width: 25%;
+}
+
+.check-td.price{
+    text-align: right;
+    width: 25%;
+}
+.check-td.title{
+    width: 60%;
+}
+.check-td.count{
+    width: 15%;
+}
+
+.gradient-button{
+    width: 60%;
+    font-size: 16px;
+    padding: 7px 7px;
+    margin: 20px auto;
+}
+
+.gradient-button.inactive{
+    pointer-events: none;
+    opacity: 0.5;
+}
+
+.toggle-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 30px;
+
+    border-radius: 100px;
+    overflow: hidden;
+
+    width: 95%;
+}
+
+.toggle-container input[type="radio"] {
+    display: none;
+}
+
+.toggle-container label {
+    display: block;
+    width: 33%;
+    padding: 5px;
+    text-align: center;
+    background-color: var(--background-color-2);
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+
+    font-size: 12px;
+}
+
+.toggle-container input[type="radio"]:checked + label {
+    background-color: var(--color-hover-1);
+    color: white;
+}
+

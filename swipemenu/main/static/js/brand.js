@@ -37,7 +37,6 @@ function set_product(product_id, direction){
 }
 
 function order(user_id, brand_id) {
-    console.log('click order');
 
     let data = {
         'user_id': user_id,
@@ -60,7 +59,7 @@ function order(user_id, brand_id) {
 
     // formData.append('products', products_data);
 
-    fetch(BASE_URL + "order/4/", {
+    fetch(BASE_URL + "add-order/", {
         method: "POST",
         body: JSON.stringify(data),
         headers: {
@@ -75,9 +74,13 @@ function order(user_id, brand_id) {
         .catch(error => {
             console.error("Ошибка:" + error);
         });
+
+    window.location.href = BASE_URL + 'orders-for-user/';
 }
 
 function getCsrfToken() {
     const csrfTokenElement = document.getElementsByName('csrfmiddlewaretoken')[0];
     return csrfTokenElement ? csrfTokenElement.value : '';
 }
+
+

@@ -1,3 +1,4 @@
+import datetime
 import random
 
 from django.contrib.auth.hashers import make_password, check_password
@@ -37,9 +38,18 @@ class User(AbstractUser):
     def have_brand(self):
         return len(Brand.objects.filter(user_id=self.id)) > 0
 
+    def get_brand(self):
+        return Brand.objects.get(user_id=self.id)
+
+    def get_avatar_url(self):
+        if not self.avatar:
+            return 'https://abrakadabra.fun/uploads/posts/2021-12/1640528661_1-abrakadabra-fun-p-serii-chelovek-na-avu-1.png'
+
+        return self.avatar.url
+
 
 class Brand(models.Model):
-    user_id = models.IntegerField()
+    user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='Пользователь', related_name='brands')
 
     title = models.CharField(max_length=150, verbose_name='Название')
     description = models.TextField(blank=True, verbose_name='Описание')
@@ -94,18 +104,20 @@ class Order(models.Model):
         (1, 'Принято'),
         (2, 'В процессе'),
         (3, 'Готово'),
+        (4, 'Завершен'),
     )
 
     brand = models.ForeignKey(Brand, on_delete=models.CASCADE, verbose_name='Бренд', related_name='orders')
     user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='Пользователь', related_name='orders')
 
     order_number = models.PositiveIntegerField(unique=True,
-                                               validators=[MinValueValidator(1000),MaxValueValidator(9999),],
+                                               validators=[MinValueValidator(10000),MaxValueValidator(99999),],
                                                verbose_name='Номер заказа')
 
     order_type = models.IntegerField(default=1, choices=ORDER_TYPE_CHOICES, verbose_name='Тип заказа')
     order_status = models.IntegerField(default=1, choices=ORDER_STATUS_CHOICES, verbose_name='Статус')
-    # items = models.ManyToManyField('OrderItem', verbose_name='Список заказанных продуктов')
+
+    created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return f"Заказ №{self.order_number} ({self.get_order_type_display()}) - {self.get_order_status_display()}"
@@ -121,11 +133,31 @@ class Order(models.Model):
             self.order_number = self.generate_order_number()
         super().save(*args, **kwargs)
 
+    def get_sum(self):
+        total = 0
+        items = OrderItem.objects.filter(order_id=self.id)
+        for item in items:
+            total += item.quantity * item.product.price
+
+        return total
+
+    def get_type(self):
+        for num, name in self.ORDER_TYPE_CHOICES:
+            if num == self.order_type:
+                return name
+
+    def get_created_date(self):
+        formatted_date = self.created_at.strftime('%d.%m.%Y %H:%M')
+        return formatted_date
+
 
 class OrderItem(models.Model):
     order = models.ForeignKey(Order, on_delete=models.CASCADE, verbose_name='Заказ')
     product = models.ForeignKey('Product', on_delete=models.CASCADE, verbose_name='Продукт')
     quantity = models.PositiveIntegerField(verbose_name='Количество')
+
+    def sum(self):
+        return int(self.product.price * self.quantity)
 
     def __str__(self):
         return f"{self.product.title} x{self.quantity}"

@@ -23,18 +23,19 @@
         </div>
         <nav class="nav-menu horizontal-container">
             <a href="/catalog" class="nav-item">Каталог</a>
-            <a href="#" class="nav-item">Корзина</a>
-            <a href="#" class="nav-item">Избранное</a>
 
             {% if user.is_authenticated %}
                 {% if user.role == 2 %}
 
                     {% if user.have_brand %}
-                        <a href="/edit-brand" class="nav-item">Мое заведение</a>
+                        <a href="/orders-for-owner" class="nav-item">Заказы</a>
+                        <a href="/edit-brand" class="nav-item">Мое&nbsp;заведение</a>
                     {% else %}
-                        <a href="/create-brand" class="nav-item">Создать заведение</a>
+                        <a href="/create-brand" class="nav-item">Создать&nbsp;заведение</a>
                     {% endif %}
 
+                {% else %}
+                    <a href="/orders-for-user" class="nav-item">Заказы</a>
                 {% endif %}
 
             <a href="/logout" class="nav-item profile-text">{{ user.username }}</a>

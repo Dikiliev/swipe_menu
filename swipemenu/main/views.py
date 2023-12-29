@@ -99,9 +99,7 @@ def add_product(request: HttpRequest):
 
 
 @csrf_exempt
-def order(request: HttpRequest, order_id: int):
-    data = create_base_data(f'Заказ {order_id}')
-
+def add_order(request: HttpRequest):
     if request.method == "POST":
         data = json.loads(request.body)
         products = data['products']
@@ -129,7 +127,52 @@ def order(request: HttpRequest, order_id: int):
 
 
 def user_orders(request: HttpRequest):
-    pass
+    data = create_base_data('Добавление товара')
+
+    orders = Order.objects.filter(user_id=request.user.id).order_by('-created_at')
+    data['orders'] = []
+
+    for order in orders:
+        data['orders'].append({
+            'this': order,
+            'items': OrderItem.objects.filter(order_id=order.id)
+        })
+
+    return render(request, 'user_orders.html', data)
+
+
+def owner_orders(request: HttpRequest):
+    data = create_base_data('Добавление товара')
+
+    brand = request.user.get_brand()
+    orders = Order.objects.filter(brand_id=brand.id).order_by('-created_at')
+    data['orders'] = []
+
+    for order in orders:
+        data['orders'].append({
+            'this': order,
+            'items': OrderItem.objects.filter(order_id=order.id)
+        })
+
+    return render(request, 'owner_orders.html', data)
+
+
+@csrf_exempt
+def set_order_status(request: HttpRequest):
+    if request.method == "POST":
+        data = json.loads(request.body)
+
+        order_id = data['order_id']
+        state = data['state']
+
+        order = Order.objects.get(id=order_id)
+        order.order_status = state
+        order.save()
+
+        response_data = {"message": "Данные успешно получены", 'data': data}
+        return JsonResponse(response_data)
+    else:
+        return JsonResponse({"error": "Метод запроса должен быть POST"})
 
 
 def catalog(request: HttpRequest):
@@ -138,8 +181,6 @@ def catalog(request: HttpRequest):
 
     brands = Brand.objects.all()
     data['brands'] = brands
-
-    print(data)
 
     return render(request, 'catalog.html', data)
 

@@ -41,8 +41,10 @@ function play_video(short){
 }
 
 function refresh(){
-    console.log(short.title);
+    console.log(short.brand.pk);
 
+    document.getElementById('brand-title').href = `http://127.0.0.1:8000/brand/${short.brand.pk}`
+    
     document.getElementById('title').innerHTML = short.short.title;
     document.getElementById('description').innerHTML = short.short.description;
     document.getElementById('brand-title').innerHTML = short.brand.fields.title;

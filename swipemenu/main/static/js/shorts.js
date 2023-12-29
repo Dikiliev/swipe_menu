@@ -28,6 +28,7 @@ function load_new_video(){
             play_video(data.short);
 
             refresh();
+            load_comments();
         })
         .catch((error) => {
             console.error('Error:', error);
@@ -50,6 +51,85 @@ function refresh(){
 
 function next(){
     load_new_video();
+}
+
+function send_comment(){
+    let input_el = document.getElementById('comment-input');
+    let text = input_el.value;
+
+    if (!text){
+        return
+    }
+
+    let data = {
+        'comment': text,
+        'short_id': short.short.id,
+        'brand_id': short.brand.pk,
+    }
+
+    console.log(data);
+
+    fetch(BASE_URL + "add-comment/", {
+        method: "POST",
+        body: JSON.stringify(data),
+        headers: {
+            'Content-Type': 'application/json',
+            "X-CSRFToken": getCsrfToken() // Получение CSRF-токена
+        }
+    })
+        .then(response => response.json())
+        .then(data => {
+            console.log(data);
+
+            
+            load_comments();
+        })
+        .catch(error => {
+            console.error("Ошибка:" + error);
+        });
+}
+
+
+function load_comments(){
+    let comments_el = document.getElementById('comments');
+
+    comments = ``
+
+    for (let i in short.comments){
+        let comment = short.comments[i];
+
+        fetch(BASE_URL + `get-user/${comment.fields.author}`)
+            .then(response => response.json())
+            .then(data => {
+                console.log('data');
+                console.log(data);
+                user = JSON.parse(data.user)[0];
+                console.log(user)
+
+                comments +=
+                    `
+                    <div class="comment">
+                
+                        <div class="comment-profile">
+                          <img src="https://abrakadabra.fun/uploads/posts/2021-12/1640528661_1-abrakadabra-fun-p-serii-chelovek-na-avu-1.png">
+                          <b>${user.fields.username}</b>
+                        </div>
+                
+                        <div>
+                          <span>${comment.fields.text}</span>
+                        </div>
+                        
+                      </div>
+                    `
+
+                comments_el.innerHTML = comments
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+            });
+
+
+    }
 }
 
 function getCsrfToken() {

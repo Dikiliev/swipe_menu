@@ -13,6 +13,10 @@ urlpatterns = [
     path('shorts/', views.show_shorts, name='shorts'),
     path('get-short/', views.get_short, name='get-short'),
 
+    path('get-user/<int:user_id>', views.get_user, name='get-user'),
+
+    path('add-comment/', views.add_comment, name='add-comment'),
+
     path('register/', views.register, name='register'),
     path('login/', views.user_login, name='login'),
     path('logout/', views.logout_user, name='logout'),

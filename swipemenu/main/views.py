@@ -32,12 +32,41 @@ def show_shorts(request: HttpRequest):
 
 
 @csrf_exempt
+def add_comment(request: HttpRequest):
+    if request.method == "POST":
+        data = json.loads(request.body)
+
+        text = data['comment']
+        short = Short.objects.get(id=data['short_id'])
+        user = User.objects.get(id=request.user.id)
+
+        comment = Comment.objects.create(short=short, author=user, text=text)
+        comment.save()
+
+        response_data = {"message": "Данные успешно получены", 'data': data}
+        return JsonResponse(response_data)
+    else:
+        return JsonResponse({"error": "Метод запроса должен быть POST"})
+
+
+@csrf_exempt
+def get_user(request: HttpRequest, user_id):
+    data = dict()
+
+    user = User.objects.get(id=user_id)
+    data['user'] = serialize('json', [user])
+
+    return JsonResponse(data)
+
+
+@csrf_exempt
 def get_short(request: HttpRequest):
     shorts = Short.objects.all()
     short = shorts[random.randint(0, len(shorts) - 1)]
 
     data = dict()
     data['short'] = {
+        'id': short.id,
         'title': short.title,
         'description': short.description,
         'url': short.video.url,

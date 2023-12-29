@@ -16,9 +16,7 @@ function get_text(filename, id){
 
 
 function swipe_menu_response(url){
-    // Создайте объект запроса
     url = 'http://127.0.0.1:8000/' + url;
-    console.log(url)
     fetch(url)
         .then(response => {
             if (!response.ok) {

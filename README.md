@@ -6,6 +6,7 @@
  JavaScript,
  HTML,
  CSS,
+ Jinja2
 
  Необходимые библиотеки Python:
  asgiref==3.7.2,

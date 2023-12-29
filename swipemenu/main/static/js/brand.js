@@ -68,12 +68,13 @@ function order(user_id, brand_id) {
         .then(response => response.json())
         .then(data => {
             console.log(data);
+            window.location.assign(BASE_URL + 'orders-for-user/');
         })
         .catch(error => {
             console.error("Ошибка:" + error);
         });
 
-    window.location.href = BASE_URL + 'orders-for-user/';
+
 }
 
 function getCsrfToken() {

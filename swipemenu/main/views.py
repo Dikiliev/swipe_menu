@@ -43,7 +43,7 @@ def add_comment(request: HttpRequest):
         comment = Comment.objects.create(short=short, author=user, text=text)
         comment.save()
 
-        response_data = {"message": "Данные успешно получены", 'data': data}
+        response_data = {"message": "Данные успешно получены", 'data': data, 'comment': serialize('json', [comment]) }
         return JsonResponse(response_data)
     else:
         return JsonResponse({"error": "Метод запроса должен быть POST"})
@@ -73,7 +73,7 @@ def get_short(request: HttpRequest):
     }
 
     data['brand'] = serialize('json', [short.brand]),
-    data['comments'] = serialize('json', Comment.objects.filter(short_id=short.id))
+    data['comments'] = serialize('json', Comment.objects.filter(short_id=short.id).order_by('-created_at'))
 
     print(data)
 

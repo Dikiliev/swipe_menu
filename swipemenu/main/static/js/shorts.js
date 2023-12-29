@@ -81,7 +81,8 @@ function send_comment(){
         .then(data => {
             console.log(data);
 
-            
+            short.comments.unshift(JSON.parse(data.comment)[0])
+
             load_comments();
         })
         .catch(error => {
@@ -101,10 +102,7 @@ function load_comments(){
         fetch(BASE_URL + `get-user/${comment.fields.author}`)
             .then(response => response.json())
             .then(data => {
-                console.log('data');
-                console.log(data);
                 user = JSON.parse(data.user)[0];
-                console.log(user)
 
                 comments +=
                     `

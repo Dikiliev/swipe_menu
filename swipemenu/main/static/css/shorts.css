@@ -65,7 +65,7 @@ button, .next-video{
     font-size: 28px;
     font-weight: 600;
 
-    margin: 10px 0px;
+    margin: 10px;
 }
 
 .brand-description{
@@ -81,7 +81,7 @@ button, .next-video{
 
 .comments{
     min-width: 400px;
-    min-height: 500px;
+    min-height: 550px;
 
     border: 1px dashed var(--color-transparent);
     border-radius: var(--base-border-radius);

@@ -11,8 +11,17 @@ DEFAULT_TITLE = 'DjangoDev'
 
 
 def home(request: HttpRequest):
-    data = create_base_data()
-    return render(request, 'index.html', data)
+    return redirect('catalog')
+
+
+def catalog(request: HttpRequest):
+    data = create_base_data('Каталог')
+    data['brands'] = []
+
+    brands = Brand.objects.all()
+    data['brands'] = brands
+
+    return render(request, 'catalog.html', data)
 
 
 def create_brand(request: HttpRequest):
@@ -175,16 +184,6 @@ def set_order_status(request: HttpRequest):
         return JsonResponse({"error": "Метод запроса должен быть POST"})
 
 
-def catalog(request: HttpRequest):
-    data = create_base_data('Каталог')
-    data['brands'] = []
-
-    brands = Brand.objects.all()
-    data['brands'] = brands
-
-    return render(request, 'catalog.html', data)
-
-
 def register(request: HttpRequest):
     data = create_base_data('Регистрация')
 
@@ -196,7 +195,9 @@ def register(request: HttpRequest):
 
         user = User()
         user.username = post_data.get('username', '')
-        user.email = post_data.get('email', '')
+        user.phone_number = post_data.get('phone', '')
+        user.address = post_data.get('address', '')
+        user.role = post_data.get('category', '')
 
         password = post_data.get('password', '')
 

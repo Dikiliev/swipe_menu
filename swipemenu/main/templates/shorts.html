@@ -1,0 +1,54 @@
+{% extends  "base.html" %}
+
+{% load static %}
+
+{% block head  %}
+<link type="text/css" rel="stylesheet" href="{% static 'css/shorts.css' %}">
+<script type="text/javascript" src="{% static 'js/shorts.js' %}"></script>
+{% endblock %}
+
+{% block content  %}
+
+<br><br>
+<div class="container">
+  {% csrf_token %}
+  <div class="video-container">
+    <video id="video-player" class="video-player" width="450" height="800" autoplay loop muted >
+      <source src="" type="video/mp4">
+      Ваш браузер не поддерживает видео тег.
+    </video>
+
+  </div>
+
+  <div class="right-container">
+    <div class="flex brand-header">
+
+      <img id="avatar" class="brand-avatar" src="">
+      <div class="header-info">
+        <span id="brand-title" class="brand-title"></span>
+      </div>
+
+    </div>
+
+    <div class="short-info">
+      <span id="title" class="brand-title"></span>
+      <span id="description" class="header-info"></span>
+    </div>
+
+    <div class="comments">
+
+    </div>
+
+    <button class="next-video" onclick="next()">Следующее видео</button>
+  </div>
+
+
+</div>
+
+<script>
+  init_shorts();
+</script>
+
+
+{% endblock %}
+

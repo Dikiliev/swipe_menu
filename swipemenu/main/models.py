@@ -164,3 +164,24 @@ class OrderItem(models.Model):
 
     def __str__(self):
         return f"{self.product.title} x{self.quantity}"
+
+
+class Short(models.Model):
+    brand = models.ForeignKey(Brand, on_delete=models.CASCADE, verbose_name='Бренд', related_name='shorts')
+
+    title = models.CharField(max_length=100, verbose_name='Название')
+    description = models.TextField(blank=True, verbose_name='Описание')
+    video = models.FileField(upload_to='videos/', verbose_name='Видео')
+
+    def __str__(self):
+        return f'{self.title} ({self.video})'
+
+
+class Comment(models.Model):
+    short = models.ForeignKey(Short, on_delete=models.CASCADE, related_name='comments')
+    author = models.ForeignKey(User, on_delete=models.CASCADE)
+    text = models.TextField(verbose_name='Текст комментария')
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f'Comment by {self.author.username} on {self.short.title}; ({self.text[:30]})'

@@ -57,8 +57,6 @@ function order(user_id, brand_id) {
         })
     }
 
-    // formData.append('products', products_data);
-
     fetch(BASE_URL + "add-order/", {
         method: "POST",
         body: JSON.stringify(data),

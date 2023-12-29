@@ -1,11 +1,13 @@
 import json
+import random
 
 from django.contrib.auth import login, logout, authenticate
 from django.http import HttpRequest, JsonResponse
 from django.shortcuts import render, redirect
 from django.views.decorators.csrf import csrf_exempt
+from django.core.serializers import serialize
 
-from .models import User, Brand, Product, Order, OrderItem
+from .models import User, Brand, Product, Order, OrderItem, Short, Comment
 
 DEFAULT_TITLE = 'DjangoDev'
 
@@ -22,6 +24,31 @@ def catalog(request: HttpRequest):
     data['brands'] = brands
 
     return render(request, 'catalog.html', data)
+
+
+def show_shorts(request: HttpRequest):
+    data = create_base_data('Shorts')
+    return render(request, 'shorts.html', data)
+
+
+@csrf_exempt
+def get_short(request: HttpRequest):
+    shorts = Short.objects.all()
+    short = shorts[random.randint(0, len(shorts) - 1)]
+
+    data = dict()
+    data['short'] = {
+        'title': short.title,
+        'description': short.description,
+        'url': short.video.url,
+    }
+
+    data['brand'] = serialize('json', [short.brand]),
+    data['comments'] = serialize('json', Comment.objects.filter(short_id=short.id))
+
+    print(data)
+
+    return JsonResponse(data)
 
 
 def create_brand(request: HttpRequest):

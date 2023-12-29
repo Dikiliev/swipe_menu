@@ -66,6 +66,9 @@ class Brand(models.Model):
     def get_product(self):
         return Product.objects.filter(brand_id=self.id)
 
+    def get_product_5(self):
+        return Product.objects.filter(brand_id=self.id)[:5]
+
     def exist(self):
         return len(User.objects.filter(username=self.title)) > 0
 

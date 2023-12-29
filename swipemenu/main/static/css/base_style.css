@@ -1,18 +1,20 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@200;500;600;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;500;600;700;800;900&display=swap');
 
 :root{
-    --base-font: Montserrat;
+    /*--base-font: Montserrat;*/
+    --base-font: Nunito;
 
-    --background-color-1: #FFF6F4;
-    --background-color-2: #dadada;
+    --background-color-1: #F8F9FC;
+    --background-color-2: #eaebee;
     --background-header: var(--background-color-1);
 
-    --color-1: #454545;
-    --color-2: #251D3A;
+    --color-1: #DC2F2F;
+    --color-2: #363636;
     --color-3: #525FE1;
 
-    --color-hover-1: #F86F03;
-    --color-hover-2: #FFA41B;
+    --color-hover-1: #FF894C;
+    --color-hover-2: #FF894C;
 
     --color-transparent: rgba(69, 69, 69, 0.41);
 
@@ -50,7 +52,7 @@
 }
 
 body{
-    background-color: var(--background-color-1);
+    background-color: white;
     min-height: 100vh;
 }
 
@@ -269,4 +271,23 @@ form a:hover{
 .flex{
     display: flex;
     align-items: center;
+}
+
+.product{
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    align-items: flex-end;
+
+    height: 280px;
+
+    margin-right: 20px;
+    padding: 5px;
+
+    /*background: linear-gradient(0deg, var(--background-color-2) -50%, transparent 70%);*/
+    background-color: white;
+
+    box-shadow: 0 1px var(--shadow-blur) var(--shadow);
+    border-radius: var(--base-border-radius);
 }

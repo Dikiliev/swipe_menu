@@ -21,9 +21,12 @@
         {% for order in orders %}
         <div class="order">
             <div class="flex">
-                <div class="order-number">Заказ #{{order.this.order_number}}
-                    <small>от</small> {{ order.this.user.username }}
-                    <small>({{order.this.get_type}})</small></div>
+                <div>
+                    <div class="order-number">Заказ #{{order.this.order_number}}
+                        <small>({{order.this.get_type}})</small></div>
+                    <div class="extra-info">Создан: {{order.this.get_created_date}}</div>
+                </div>
+
 
                 <div class="brand">
                     <span class="brand-title"><small>от</small> {{ order.this.user.username }}</span>
@@ -50,10 +53,10 @@
             </div>
 
             <div id="status-{{order.this.id}}" class="status">
-                <button onclick="set_state({{order.this.id}}, 1)" class="status-state active"><p>Принято</p></button>
-                <button onclick="set_state({{order.this.id}}, 2)" class="status-state"><p>В&nbsp;процессе</p></button>
-                <button onclick="set_state({{order.this.id}}, 3)" class="status-state"><p>Готово</p></button>
-                <button onclick="set_state({{order.this.id}}, 4)" class="status-state"><p>Завершен</p></button>
+                <button onclick="set_state({{order.this.id}}, 1)" class="status-state {% if order.this.order_status > 0 %} active {% endif %}"><p>Принято</p></button>
+                <button onclick="set_state({{order.this.id}}, 2)" class="status-state {% if order.this.order_status > 1 %} active {% endif %}"><p>В&nbsp;процессе</p></button>
+                <button onclick="set_state({{order.this.id}}, 3)" class="status-state {% if order.this.order_status > 2 %} active {% endif %}"><p>Готово</p></button>
+                <button onclick="set_state({{order.this.id}}, 4)" class="status-state {% if order.this.order_status > 3 %} active {% endif %}}"><p>Завершен</p></button>
             </div>
 
         </div>

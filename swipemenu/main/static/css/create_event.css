@@ -29,7 +29,7 @@ form{
 
 .textarea{
     display: inline-flex;
-    height: 200px;
+    height: 80px;
     vertical-align: top;
     text-align: start;
 }

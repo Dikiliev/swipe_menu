@@ -20,12 +20,12 @@
             </div>
 
             <div class="flex brand-content">
-                {% for product in brand.get_product %}
+                {% for product in brand.get_product_5 %}
 
                 <a href="/brand/{{brand.id}}" class="product">
                     <img src="{{ product.image.url }}">
-                    <span class="product-title">{{ product.title | truncatechars:13}}</span>
-                    <span class="product-composition">{{ product.composition | truncatechars:20 }}</span>
+                    <span class="product-title">{{ product.title | truncatechars:15}}</span>
+                    <span class="product-composition">{{ product.composition | truncatechars:24 }}</span>
                     <span class="product-price">{{ product.get_price }}<span class="rub">₽</span></span>
                 </a>
 

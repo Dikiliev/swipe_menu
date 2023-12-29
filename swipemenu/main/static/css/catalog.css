@@ -1,11 +1,11 @@
 .brands-container{
     width: 60%;
 
-    box-shadow: 0 1px var(--shadow-blur) var(--shadow);
     padding: 30px;
     margin: 10px auto;
 
-    background-color: white;
+    background-color: var(--background-color-1);
+    box-shadow: 0 1px var(--shadow-blur) var(--shadow);
 
     border-radius: var(--base-border-radius);
 }
@@ -69,23 +69,7 @@ a{
     overflow: hidden;
 }
 
-.product{
-    display: flex;
-    flex-direction: column;
-    flex-wrap: nowrap;
-    justify-content: space-between;
-    align-items: flex-end;
 
-    height: 280px;
-
-    margin-right: 20px;
-    padding: 5px;
-
-    background: linear-gradient(0deg, var(--background-color-2) -50%, transparent 70%);
-
-    box-shadow: 0 1px var(--shadow-blur) var(--shadow);
-    border-radius: var(--base-border-radius);
-}
 
 .rub{
     font-size: 24px;
@@ -142,4 +126,3 @@ a{
 .like-button.active{
     background-image: url('../images/like-active.png');
 }
-

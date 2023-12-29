@@ -52,10 +52,10 @@
                 </div>
 
                 <div class="status">
-                    <div class="status-state active"><p>Принято</p></div>
-                    <div class="status-state"><p>В процессе</p></div>
-                    <div class="status-state"><p>Готово</p></div>
-                    <div class="status-state"><p>Завершен</p></div>
+                    <div class="status-state {% if order.this.order_status > 0 %} active {% endif %}"><p>Принято</p></div>
+                    <div class="status-state {% if order.this.order_status > 1 %} active {% endif %}"><p>В процессе</p></div>
+                    <div class="status-state {% if order.this.order_status > 2 %} active {% endif %}"><p>Готово</p></div>
+                    <div class="status-state {% if order.this.order_status > 3 %} active {% endif %}"><p>Завершен</p></div>
                 </div>
 
             </div>

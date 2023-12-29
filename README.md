@@ -15,5 +15,4 @@
  tzdata==2023.3,
 
 Запуск через консоль:
- cd .../swipemenu
  python manage.py runserver
